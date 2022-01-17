@@ -1,0 +1,41 @@
+/*
+CF #763(Div. 2) 
+https://codeforces.com/contest/1623/problem/A
+Algorithm: Brute force, Implementation, math
+Time Complexity: O(2*n-x-y)
+Code Length: About 30 lines
+
+그냥 하라는 대로 구현하면 된다
+*/
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long int ll;
+
+int main()
+{
+  std::cin.tie(nullptr);
+  std::cout.tie(nullptr);
+  std::ios_base::sync_with_stdio(false);
+  
+  int t;
+  cin >> t;
+
+  while(t--) {
+    int n, m, r, c, rd, cd;
+    cin >> n >> m >> r >> c >> rd >> cd;
+    int board[n+1][m+1];
+    int dr = 1;
+    int dc = 1;
+
+    int ans = 0;
+    while(r != rd && c != cd) {
+      if(r + dr <= 0 || r + dr > n) dr = -dr;
+      if(c + dc <= 0 || c + dc > m) dc = -dc;
+      
+      r = r + dr;
+      c = c + dc;
+      ans++;
+    }
+    cout << ans << '\n';
+  }
+}
