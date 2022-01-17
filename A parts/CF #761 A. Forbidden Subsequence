@@ -1,0 +1,70 @@
+/*
+CF #761(Div. 2) 
+https://codeforces.com/contest/1617/problem/A
+Algorithm: Constructive Algorithms Greedy Sortings Strings
+Time Complexity: O(nlogn)
+Code Length: About 40 lines
+
+constructive algorithm은 특정 그래프나 배열을 산출하는 것이 목표다
+
+greedy 요소가 들어간 이유는 특정 찾기 방식이 있는 것이 아닌
+그저 prefix 배열에 알파벳을 담고 순서에 맞게 출력했기 때문이다
+
+sorting은 당연히 가장 작은 케이스를 찾기 위함이고
+
+string은 특정 s1 안에 substring이 있는지 확인하는 함수인 find를 사용했다
+S.find(T);
+
+내가 실수한 부분은 연속된 부분수열과 부분수열을 헷갈렸기 때문이다.
+consecutive subsequence <-> subsequence
+
+주어진 T가 abc일 경우 sorting을 하게 되면
+부분 수열,즉 일부를 지운 수열도 a,b,c가 1개라도 있는 한 abc 부분 수열을 만들 수 있다.
+
+이를 방지하고 사전식으로 가장 작은 케이스를 찾는 경우는
+a를 모두 출력하고 c를 모두 출력하고 b를 모두 출력하는 케이스 뿐이다.
+
+lexicographically와 !subsequence를 모두 만족하는 케이스를 생각해내는 것이
+이 문제의 핵심이었다
+*/
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long int ll;
+#define all(x) x.begin(), x.end()
+
+int main()
+{
+  std::cin.tie(nullptr);
+  std::cout.tie(nullptr);
+  std::ios_base::sync_with_stdio(false);
+  
+  int t;
+  cin >> t;
+
+  while(t--) {
+    string S, T;
+    cin >> S >> T;
+    
+    int num[26];
+    memset(num, 0, sizeof(num));
+    for(auto x : S) {
+      num[x -'a']++;
+    }
+
+    if(T != "abc" || !num[0] || !num[1] || !num[2])
+    {
+      sort(all(S));
+      cout << S << '\n'; 
+    }
+    else {
+      while(num[0]--) cout << "a";
+      while(num[2]--) cout << "c";
+      while(num[1]--) cout << "b";
+      for(int i = 3; i < 26; i++) {
+        while(num[i]--) cout << char('a' + i);
+      }
+      cout << '\n';
+    }
+    
+  }
+}
