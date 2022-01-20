@@ -1,0 +1,62 @@
+/*
+CF #752(Div. 2) 
+https://codeforces.com/contest/1604/problem/A
+Algorithm: greedy
+Time Complexity: O(n)
+Code Length: About 25 lines
+
+내 코드는 그때 그때마다의 차이를 더하는 것이었는데
+확인해보니 그냥 가장 큰 차이가 나는 친구만 정리해주면
+뒤쪽은 자동으로 처리되고,
+앞쪽은 신경 쓸 필요없이 자동으로 적절한 위치에 들어간다고 생각하면 된다
+*/
+
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long int ll;
+#define all(x) x.begin(), x.end()
+
+int main()
+{
+  std::cin.tie(nullptr);
+  std::cout.tie(nullptr);
+  std::ios_base::sync_with_stdio(false);
+
+  int T;
+  cin >> T;
+
+/* My Code
+  while(T--) {
+    int n;
+    cin >> n;
+    vector<int> v = {0,};
+    for(int i = 1; i <= n; i++) {
+      int tmp;
+      cin >> tmp;
+      v.push_back(tmp);
+    }
+    int sum = 0;
+    for(int i = 1; i <= n; i++) {
+      if(v[i] > i) {
+        sum += max(0, v[i] - i - sum);
+      }
+    }
+    cout << sum << '\n';
+  }
+*/
+
+/* Answer Code
+  while(T--) {
+    int n; cin >> n;
+    int x;
+    int m = 0;
+    for(int i = 1; i <= n; i++) {
+      cin >> x;
+      m = max(m, x-i);
+    }
+    cout << m << '\n';
+  }
+*/
+
+}
+
