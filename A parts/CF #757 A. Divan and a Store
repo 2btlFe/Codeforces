@@ -1,0 +1,44 @@
+/*
+CF #757(Div. 2) 
+https://codeforces.com/contest/1614/problem/A
+Algorithm: brute force, constructice algorithms, greedy
+Time Complexity: O(nlogn)
+Code Length: About 30 lines
+
+sorting 한 뒤에 작은 것부터 조건 3가지에 맞출 수 있는지 확인하면서 그냥
+세주면 된다 
+*/
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long int ll;
+#define all(x) x.begin(), x.end()
+
+int main()
+{
+  std::cin.tie(nullptr);
+  std::cout.tie(nullptr);
+  std::ios_base::sync_with_stdio(false);
+  
+  int T;
+  cin >> T;
+
+  while(T--) {
+    int n, l, r, k;
+    cin >> n >> l >> r >> k;
+    vector<int> chocolate;
+    for(int i = 0; i < n; i++) {
+      int tmp;
+      cin >> tmp;
+      chocolate.push_back(tmp);
+    }
+    sort(all(chocolate));
+    int ret = 0;
+    for(int item : chocolate) {
+      if(item <= r && item >= l && item <= k) {
+        ret++;
+        k -= item;
+      }
+    }
+    cout << ret << '\n';
+  }
+}
