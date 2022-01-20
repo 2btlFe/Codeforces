@@ -1,0 +1,63 @@
+/*
+CF #754(Div. 2) 
+https://codeforces.com/contest/1605/problem/A
+Algorithm: math, number theory
+Time Complexity: O(1)
+Code Length: About 25 lines
+
+그냥 2가지 케이스를 구분했으면 됐다
+a1 or a3 +1 and a2 -1
+a1 or a3 -1 and a2 + 1
+
+두 케이스 모두 3씩 움직이게 되므로
+절댓값을 감안해서
+3으로 나누어 떨어지면 0
+아니면 1로 하면 된다
+*/
+
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long int ll;
+#define all(x) x.begin(), x.end()
+
+int main()
+{
+  std::cin.tie(nullptr);
+  std::cout.tie(nullptr);
+  std::ios_base::sync_with_stdio(false);
+
+  int T;
+  cin >> T;
+
+
+  while(T--) {
+    int a1, a2, a3;
+    cin >> a1 >> a2 >> a3;
+    int tmp = a1 + a3 -2*a2;
+
+    if(tmp % 3 == 0) cout << 0;
+    else cout << 1;
+
+    cout << '\n';
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
