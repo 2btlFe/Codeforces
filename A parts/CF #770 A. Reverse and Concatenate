@@ -1,0 +1,50 @@
+/*
+CF #770 A. Reverse and Concatenate
+algorithm: brute force, strings
+time complexity: O(n)
+
+펠린드롬 여부를 확인할 수 있는지 
+평가하는 문제였다
+
+근데...
+python은
+Palindrome을 확인하는 것이 너무 쉽다
+if S == S[::-1]
+이것만 확인하면 된다 ㅡㅡ;;;;;;;;
+*/
+
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long int ll;
+#define all(x) x.begin(), x.end()
+ 
+int main()
+{
+  std::cin.tie(nullptr);
+  std::cout.tie(nullptr);
+  std::ios_base::sync_with_stdio(false);
+  
+  int T;
+  cin >> T;
+ 
+  while(T--) {
+    int n, k;
+    string s;
+    cin >> n >> k;
+    cin >> s;
+    int l = 0;
+    int r = n - 1;
+    int isPal = 1;
+    while(l <= r) {
+      if(s[l] != s[r]) {
+        isPal = 0;
+        break;
+      }
+      l++;
+      r--;
+    }
+ 
+    if(isPal == 1 || k == 0) cout << 1 << '\n';
+    else cout << 2 << '\n';
+  }
+}
