@@ -1,0 +1,65 @@
+/*
+CF #770 C.OKEA
+algorithm: constuctive, math
+time complexity: O(nk)
+
+말도 안 되게 pactorial이라는 생각을 했고
+그대로 종말했다
+
+2가지 조건이 있었다
+k == 1 이면 무조건 된다(l - r + 1의 합이 항상 2뿐이라 (n/2)가 항상 정수가 됨)
+n 이 홀수면 무조건 안 된다
+
+수열: i, i+n, i+2n, i+3n,,,,,,,,, i+n(k-1)
+l부터 r까지의 합은
+sum = i*(r-1+1) + (r+l-2)*(n/2)*(r-l+1)
+이므로 평균은 (r-l+1)을 나눈
+mean = (i + (n/2)*(r+l-2))
+
+교훈: 수학적으로 검증되지 않으면 100퍼 틀린다
+이상한 생각으로 시간을 많이 잡아 먹었다
+그러면 안 된다
+항상 예쁜 답이 되도록 나온다
+*/
+
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long int ll;
+#define all(x) x.begin(), x.end()
+
+int main()
+{
+  std::cin.tie(nullptr);
+  std::cout.tie(nullptr);
+  std::ios_base::sync_with_stdio(false);
+  
+  int T;
+  cin >> T;
+
+  while(T--) {
+    int n, k;
+    cin >> n >> k;
+
+    if(k == 1) {
+      cout << "YES" << '\n';
+      for(int i = 1; i <= n; i++) cout << i << '\n';
+      continue;
+    }
+
+    if(n %2 == 1) {
+      cout << "NO" << '\n';
+      continue;
+    }
+
+    cout << "YES" << '\n';
+    for(int i = 1; i <= n; i++) {
+      int cnt = k;
+      int j = i;
+      while(cnt--) {
+        cout << j << " ";
+        j += n;
+      }
+      cout << '\n';
+    }
+  }
+}
