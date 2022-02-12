@@ -1,0 +1,74 @@
+/*
+ECF #122 D. Make Them Equal
+Algorithm: DP - Knapsack
+Time Complexity: O(nk)
+Explanation:
+다 좋았는데 dp[10^3][10^6]으로 하면
+범위를 넘게 되서 틀린다
+
+그렇기 때문에 앞으로 knapsack은 volume으로만 한다
+dp[10^6] 은 가능하다
+
+vector<int> dp(k+1, 0);
+for(int i = 1; i < n; i++) 
+  for(int j = k - vol[i]; j >= 0; j--) 
+    dp[j + vol[i]] = max(dp[j + vol[i]], dp[j] + need[i]);
+cout << *max_element(all(dp));
+
+수학적으로 그냥 구현만 해도 되는 걸 굳이 이상하게 만든 건 패착이다.
+vector<int> d(N, N);
+  d[1] = 0;
+  for(int i = 1; i < N; i++) {
+    for(int x = 1; x <= i; x++) {
+      int j = i + i/x;
+      if(j < N) d[j] = min(d[j], d[i] + 1); 
+    }
+  }
+*/
+
+
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long int ll;
+#define len(x) (int) (x).size()
+#define all(x) x.begin(), (x).end()
+#define endl "\n"
+ 
+const int N = 1001; 
+ 
+int main()
+{
+  std::cin.tie(nullptr);
+  std::cout.tie(nullptr);
+  std::ios_base::sync_with_stdio(false);
+  vector<int> d(N, N);
+  d[1] = 0;
+  for(int i = 1; i < N; i++) {
+    for(int x = 1; x <= i; x++) {
+      int j = i + i/x;
+      if(j < N) d[j] = min(d[j], d[i] + 1); 
+    }
+  }
+ 
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, k;
+    cin >> n >> k;
+    vector<int> b(n), c(n);
+    for(int &x : b) cin >> x;
+    for(int &x : c) cin >> x;
+    int sum = 0;
+    for(int x : b) sum += d[x];
+ 
+    k = min(k, sum);
+    //knapsack
+    vector<int> dp(k+1, 0);
+    for(int i = 0; i < n; i++) {
+      for(int j = k - d[b[i]]; j >= 0; j--) {
+        dp[j + d[b[i]]] = max(dp[j + d[b[i]]], dp[j] + c[i]);
+      }
+    }
+    cout << *max_element(all(dp)) << endl;;
+  }
+}
