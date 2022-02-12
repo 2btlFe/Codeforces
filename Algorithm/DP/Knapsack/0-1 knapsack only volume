@@ -1,0 +1,9 @@
+int knapsack(vector<int> &vol, vector<int> &need, int n, int k) {
+  vector<int> dp(k+1, 0);
+  for(int i = 0; i < n; i++) {
+    for(int j = k - vol[i]; j >= 0; j--) {
+      dp[j + vol[i]] = max(dp[j + vol[i]], dp[j] + need[i]);
+    }
+  }
+  return *max_element(all(dp));
+}
