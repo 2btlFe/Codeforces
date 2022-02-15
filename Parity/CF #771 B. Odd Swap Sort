@@ -1,0 +1,51 @@
+/*
+CF #771 B. Odd Swap Sort
+Algorithm: Data Structures, Math, Sortings
+Time Complexity: O(n)
+Explaination: 
+가능 여부를 판단하는 문제
+-> 그리디하게 생각할 가능성이 높다
+
+ai + a(i+1) = odd 일 때만 swap 가능
+=> 다른 parity끼리만 swap 가능
+=> 같은 parity끼리 정렬되어 있는 상태면 항상 가능
+*/
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long int ll;
+#define len(x) (int) (x).size()
+#define all(x) x.begin(), (x).end()
+#define endl "\n"
+
+int main()
+{
+  std::cin.tie(nullptr);
+  std::cout.tie(nullptr);
+  std::ios_base::sync_with_stdio(false);
+
+  int t;
+  cin >> t;
+  while(t--) {
+    int n;
+    cin >> n;
+    int maxOdd = 0;
+    int maxEven = 0;
+
+    int flag = 1;
+    while(n--) {
+      int x;
+      cin >> x;
+      if(x%2 == 0 && x >= maxEven) {
+        maxEven = x;
+      }
+      else if(x%2 == 1 && x >= maxOdd){
+        maxOdd = x;
+      }
+      else {
+        flag = 0;
+      }
+    }
+    if(flag == 1) cout << "YES" << endl;
+    else cout << "NO" << endl;  
+  }
+}
