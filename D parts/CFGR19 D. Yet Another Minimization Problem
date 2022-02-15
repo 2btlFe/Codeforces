@@ -1,0 +1,88 @@
+/*
+CFGR19 D. Yet Another Minimization Problem
+Algorithm: Brute Force, DP, Greedy, Math
+Time Complexity: O(n)
+Explaination: 
+시그마를 풀고 나면
+a^2 + b^2의 최소를 구하는 문제가 된다
+
+우리는 가능한 a와 b의 모든 경우의 수를 구한 뒤에 
+비교하면 된다 -> dp
+
+모든 경우의 수를 구하기 위해
+각각의 최소합, 최대합을 구하고
+a와 b 두 수의 차이가 될 수 있는 집합을 구한다
+이때 BFS, Floyd WarShall 같이
+비트 마다 똑같은 거리를 이동해서 생길 수 있는 경우의 수를 구한다
+
+0 1 2 3 4 -------- Max - Min
+1 0 1 1 1
+    1 0 1 1 1
+1 0 1 1 1 1 1 
+
+dp |= dp << (b[i] - a[i]);
+*/
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long int ll;
+#define len(x) (int) (x).size()
+#define all(x) x.begin(), (x).end()
+#define endl "\n"
+
+int sq(int a) {
+  return a*a;
+}
+
+int main()
+{
+  std::cin.tie(nullptr);
+  std::cout.tie(nullptr);
+  std::ios_base::sync_with_stdio(false);
+
+  int t;
+  cin >> t;
+  while(t--) {
+    int n;
+    cin >> n;
+    vector<int> a(n), b(n);
+    for(int& x : a) cin >> x;
+    for(int& x : b) cin >> x;
+    
+    int sqSum, sumMin, sumMax;
+    sqSum = sumMin = sumMax = 0;
+    for(int i = 0; i < n; i++) {
+      if(a[i] > b[i]) swap(a[i], b[i]);
+
+      sumMin += a[i];
+      sumMax += b[i];
+      sqSum += sq(a[i]) + sq(b[i]);
+    }
+    bitset<10010> dp;  
+    dp[0] = 1;
+    for(int i = 0; i < n; i++) {
+      dp |= dp << (b[i] - a[i]);
+    }
+
+    int ans = sq(sumMax) +sq(sumMin);
+    for(int i = 0; i <= sumMax - sumMin; i++) {
+      if(dp[i]) ans = min(ans, sq(sumMax - i) + sq(sumMin + i));
+    }
+    cout << sqSum*(n-2) + ans << endl;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
