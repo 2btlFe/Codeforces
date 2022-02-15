@@ -1,0 +1,62 @@
+/*
+CF #771 C. Inversion Graph
+Algorithm: Stack DSU(Disjoint Set Unit) Graphs Math
+Time Complexity: O(n)
+Explaination: 
+스택에 최대 최소 pair를 넣고 저장한 뒤에
+새로 들어오는 pair에 맞춰서 갱신해나간다
+a1.min < a2.max 이면 무조건
+연결할 수 있다
+왜냐면 a1.min보다 크고 a2.max보다 작은 모든 것들을 연결할 수 있다
+
+자료구조를 써서 푸는 경우도 있으니 
+정신 똑바로 차리고 풀어야 한다
+일단 이러한 문제 유형은 외우자 
+"i < j 인데 Pi > Pj 이면 연결할 수 있는 구조는 stack을 만들어서 min과 max를 계속 비교해서 정리한다"
+
+Inversion Graph
+*/
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long int ll;
+#define len(x) (int) (x).size()
+#define all(x) x.begin(), (x).end()
+#define endl "\n"
+
+int main()
+{
+  std::cin.tie(nullptr);
+  std::cout.tie(nullptr);
+  std::ios_base::sync_with_stdio(false);
+
+  int t;
+  cin >> t;
+  while(t--) {
+    int n;
+    cin >> n;
+
+    vector<int> v(n);
+    for(int&x : v) cin >> x;
+
+    stack<pair<int, int> > s;
+    for(int i = 0; i < n; i++) {
+      s.push({v[i], v[i]});
+      while(s.size() >= 2) {
+        auto t1 = s.top();
+        s.pop();
+        auto t2 = s.top();
+        s.pop();
+
+        if(t1.first < t2.second) {
+          s.push({min(t1.first, t2.first), max(t1.second, t2.second)});
+        }
+        else {
+          s.push(t2);
+          s.push(t1);
+          break;
+        }
+      }
+    }
+    cout << s.size() << endl;  
+  }
+}
