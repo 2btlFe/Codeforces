@@ -1,0 +1,70 @@
+//================code===================//
+
+#ifndef OHSOLUION
+#pragma GCC optimize("O3")
+#pragma GCC optimize("Ofast")
+#pragma GCC optimize("unroll-loops")
+#endif
+
+#include <bits/stdc++.h>
+#include <cmath>
+#include <random>
+#include <chrono>
+#include <unordered_set>
+
+#define ci(t) cin>>t
+#define co(t) cout<<t
+#define LL long long
+#define ld long double
+#define fa(i,a,b) for(int i=a;i<b;++i)
+#define fd(i,a,b) for(int i=a;i>b;--i)
+#define setp tuple<LL,LL,LL>
+#define setl pair<LL,LL>
+#define seti pair<int,int>
+#define VL vector<LL>
+#define VI vector<int>
+#define eps 0.000000001
+#define PI acos(-1)
+
+
+using namespace std;
+
+
+LL gcd(LL a, LL b)
+{
+    if (!(a && b)) return max(a, b);
+    return a % b ? gcd(b, a % b) : b;
+}
+
+#ifdef OHSOLUTION
+#define ce(t) cerr << t
+#define AT cout << "\n=================ANS=================\n"
+#define AE cout << "\n=====================================\n"
+#define DB(a) cout << __LINE__ << ": " << #a << " = " << (a) << endl;
+#define __builtin_popcount __popcnt
+#define LLL LL
+
+#else
+#define AT
+#define AE
+#define ce(t)
+#define DB(a)
+
+#endif
+
+pair <int, int> vu[9] = { {0,1},{1,0},{0,-1} ,{-1,0}, {1,-1} , {-1,1},{-1,-1},{1,1},{0,0} }; //RDLU EWSN
+mt19937 rng((unsigned int)chrono::steady_clock::now().time_since_epoch().count());
+
+
+template<typename T, typename U> void ckmax(T& a, U b) { a = a < b ? b : a; }
+template<typename T, typename U> void ckmin(T& a, U b) { a = a > b ? b : a; }
+struct gcmp { bool operator()(LL a, LL b) { return a < b; } bool operator()(setl& a, setl& b) { return a.second < b.second; } };
+struct lcmp { bool operator()(LL a, LL b) { return a > b; } bool operator()(setl& a, setl& b) { return a.second > b.second; } };
+
+const int max_v = 1e5 + 7;
+const int max_k = 5e2 + 7;
+const int bsz = 27;
+const int INF = 0x3f3f3f3f;
+const LL LNF = 0x3f3f3f3f3f3f3f3f;
+const LL mod = 1e9 + 7;//998244353;// 
+template<typename T, typename U> void MOD(T& a, U b) { a += b; if (a < 0) a += mod; if (a >= mod) a -= mod; };
