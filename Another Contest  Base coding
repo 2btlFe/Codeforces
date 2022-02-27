@@ -1,0 +1,120 @@
+#pragma GCC optimize("O3")
+#include <bits/stdc++.h>
+#define _EXT_CODECVT_SPECIALIZATIONS_H 1
+#define _EXT_ENC_FILEBUF_H 1
+#include <bits/extc++.h>
+using namespace std;
+
+#define int i64
+#define FP_EPS 1e-11
+#define COUT_FP 11
+using f64=double; //long double(살짝느림),__float128(매우느림)
+#define CPP20 1
+#define DBG_SETW 3
+#define endl '\n' //remove it when interactive
+
+#define fi first
+#define se second
+#define mkp make_pair
+#define mkt make_tuple
+#define lb lower_bound
+#define ub upper_bound
+#define bs binary_search
+#define itos to_string
+#define head(x) (x.begin())
+#define tail(x) prev(x.end())
+#define dbg(...) void(0)
+#define dbgif(...) void(0)
+#define dbg1(...) void(0)
+#define dbg1if(...) void(0)
+using i64=long long;using u64=unsigned long long;using u32=unsigned;
+using pint=pair<int,int>;using tint=tuple<int,int,int>;
+template<class T>using Str=basic_string<T>;
+template<class T,class CMP=greater<>>using PQ=std::priority_queue<T,vector<T>,CMP>;
+//functions before include <arr.h>
+
+//Math
+#if !(CPP20)
+	#define countl_zero(x) __builtin_clzll(x)
+	#define popcount(x) __builtin_popcountll(x)
+	#define bit_ceil(x) 1<<clg2(x)
+#endif
+#if CPP20
+	#define sz ssize
+#else
+	template<class T>int sz(const T& x){return x.size();}
+#endif
+int fdiv(int a,int b){if(b<0)a=-a,b=-b;return (a>0)?a/b:(a-b+1)/b;}
+int cdiv(int a,int b){if(b<0)a=-a,b=-b;return (a>0)?(a+b-1)/b:a/b;}
+i64 flg2(u64 x){return 63-countl_zero(x);}
+i64 clg2(u64 x){return x-1==0?0:64-countl_zero(x-1);}
+int fsqrt(i64 n) {i64 i=1;while(i*i<=n)i++;return i-1;}
+int csqrt(i64 n) {i64 i=1;while(i*i<n)i++;return i;}
+template<class T>T sq(T x){return x*x;}
+template<class T>constexpr T inf(){return numeric_limits<T>::max()/2;}
+template<class T>constexpr T nan(){return inf<T>()+1;}
+#ifdef CPP20
+template<typename T> concept MemberInf=requires(T t){t.inf();};
+template<typename T> concept MemberNan=requires(T t){t.nan();};
+template<MemberInf T>T inf(){return T().inf();}
+template<MemberNan T>T nan(){return T().nan();}
+#endif
+
+//IO & misc
+template<class...A>void print(A...a){((cout<<a),...);}
+template<class...A>void println(A...a){((cout<<a),...,(cout<<endl));}
+template<class T=int>T input(){T x;cin>>x;return x;}
+template<class T,class U>bool assmin(T& a,U&& b){return a>b?a=b,true:false;}
+template<class T,class U>bool assmax(T& a,U&& b){return a<b?a=b,true:false;}
+void MUST(bool expr){
+#if DEBUG
+	#include <csignal>
+	if(!expr)
+		raise(SIGINT);
+#endif
+}
+#define ARG(...) __VA_ARGS__
+#define func(RetT,fname,...) function<RetT(__VA_ARGS__)> fname=[&](__VA_ARGS__)->RetT
+#define lam(expr,...) [&](__VA_ARGS__){return expr;}
+#define lamp(expr,...) [](__VA_ARGS__){return expr;}
+
+template<class T, class P=vector<T>>
+struct Arr:public P{
+	Arr(){P::shrink_to_fit();}
+	explicit Arr(signed n):P(n){}
+	explicit Arr(signed n,T init):P(n,init){}
+	Arr(initializer_list<T>il):P(il){}
+	Arr(auto its, auto ite):P(its,ite){}
+	inline T& operator[](signed i){
+		int n=sz(*this);
+		if(i<0)i+=n,dbg1("Neg Index Found");
+		if(i>=n)i-=n,dbg1("Over Index Found");
+		return P::operator[](i);
+	}
+	const T& operator[](signed i)const{	
+		int n=sz(*this);
+		if(i<0)i+=n,dbg1("Neg Index Found");
+		if(i>=n)i-=n,dbg1("Over Index Found");
+		return P::operator[](i);
+	}
+	T& at(signed i){return *this[i];}
+	const T& at(signed i)const{return *this[i];}
+};
+template<class... A> auto ARR(auto n,A&&... a)
+{if constexpr(!sizeof...(a)) return n; else return Arr(n,ARR(a...));}
+
+//Consts
+// const f64 pi=numbers::pi_v<f64>,eps=FP_EPS;
+const f64 pi=acos(-1),eps=FP_EPS;
+const int dir[4][2]={{1,0},{0,1},{-1,0},{0,-1}};
+//functions after include <arr.h>
+
+template<class T>int argmin(const Arr<T>& a){return min_element(a.begin(),a.end())-a.begin();}
+template<class T>int argmax(const Arr<T>& a){return max_element(a.begin(),a.end())-a.begin();}
+Arr<int> permuinv(const Arr<int>& a){Arr<int> r(sz(a));for(int i=0;i<sz(a);i++)r[a[i]]=i;return r;}
+template<class T>map<T,Arr<int>> classify(const Arr<T>& a){
+	map<T,Arr<int>> r;
+	for(int i=0;i<sz(a);i++)
+		r[a[i]].push_back(i);
+	return r;
+}
