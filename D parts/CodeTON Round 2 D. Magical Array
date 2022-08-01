@@ -1,0 +1,63 @@
+/*
+CodeTON Round 2 D. Magical Array
+Algorithm: Math, Hash
+Time_Complexity: O(nm)
+Explaination:
+중복하는 숫자들 중 특별한 하나의 숫자를 찾는 경우
+map을 이용한 hash를 통해 빠르게 구할 수 있다 
+
+map의 .find 기능은 O(1)이기 때문에 좋다 
+if(a == b) 는 너무 느리다 
+
+그렇다고 vector에 기록해두기에는 a가 지나치게 클 수 있고 
+메모리를 낭비할 수 있으므로 map을 써야 한다 
+
+좋은 테크닉이다. 
+*/
+
+#include <bits/stdc++.h>
+#define ll long long
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    int t; cin >> t; 
+    while(t--) { 
+        int n, m;
+        cin >> n >> m;
+        
+        map<ll, ll> val_to_idx;
+        ll res_tmp = -1;
+        
+        for(int i = 1; i <= n; i++) {
+            ll val = 0;
+            for(int j = 0; j < m; j++) {
+                ll x; cin >> x;
+                val += x*j;
+            }
+            if(val_to_idx.find(val) != val_to_idx.end()) {
+                res_tmp = val;
+                val_to_idx[val] = -1;
+            } 
+            else {
+                val_to_idx[val] = i;
+            }
+        }
+        for(auto &item : val_to_idx) {
+            if(item.second != -1) {
+                cout << item.second << " " << abs(item.first - res_tmp) << endl;
+                break;
+            }
+        }
+        
+        
+    }
+    
+    
+    
+    
+    
+}
