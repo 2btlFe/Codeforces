@@ -1,0 +1,61 @@
+/*
+CF #837 A. Hossam and CombinatoricA. Hossam and Combinatorics
+Algorithm: Hash
+TC: O(N)
+SC: O(N)
+Explaination:
+
+ret = 2*m[mx]*m[mn];
+m이 int 여서 overflow가 생겼다
+
+곱하기가 들어가는 연산은 무조건 ll으로 하자
+되도록이면 자료형은 ll을 쓰자 
+*/
+
+#include<bits/stdc++.h>a
+using namespace std;
+typedef long long int ll;
+#define len(x) (int) (x).size()
+#define all(x) x.begin(), (x).end()
+#define endl "\n"
+ 
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    int T;
+    cin >> T;
+     
+    while(T--) {
+        ll n; cin >> n;
+        vector<int> v(n);
+        map<int, ll> m;
+        int mx, mn;
+        mx = -1;
+        mn = 1000000000;
+        for(int i = 0; i < n; i++) {
+            int x; cin >> x;
+            m[x]++;
+            mn = min(mn, x);
+            mx = max(mx, x);
+        }
+        
+        ll ret;
+        if(mn == mx) {
+            ret = n*(n-1);
+        } else {
+            ret = 2*m[mx]*m[mn];   //곱하기 연산을 하면서 int범위를 넘길 수 있기 때문에 곱해주는 수도 ll으로 맞춘다
+        }
+ 
+        cout << ret << endl;
+ 
+ 
+ 
+ 
+        
+    }
+}
+ 
+ 
