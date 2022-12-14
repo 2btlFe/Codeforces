@@ -1,0 +1,53 @@
+/*
+ECF #139 B. Notepad#
+Algorithm: Greedy, Brute Force
+TC: O(N)
+SC: O(N)
+Explaination:
+중복되는 2글자가 겹치지 않게 나타나는 
+경우를 구하기만 하면 된다
+hashmap 사용하면 편하게 풀 수 있다
+*/
+
+#include <bits/stdc++.h>
+#define ll long long
+#define all(x) x.begin(), x.end()
+#define len(x) x.size()
+ 
+ 
+using namespace std;
+ 
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    int T; cin >> T;
+    while(T--) {
+        int n; cin >> n;
+        string s; cin >> s;
+        map<string, int> m;
+        m.clear();
+        
+        bool ok = false;
+        string buf;
+        for(int i = 0; i < n - 1; i++) {
+            string tmp = s.substr(i, 2);
+            if(m.count(tmp) == 0) {
+                m[buf]++;
+                buf = tmp;
+            } else {
+                ok = true;
+                break;
+            }
+        }
+        
+        if(ok) cout << "YES" << endl;
+        else cout << "NO" << endl;
+        
+        
+        
+        
+    
+    }
+}
