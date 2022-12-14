@@ -1,2 +1,7 @@
 # Codeforces
-It's for Codeforces 
+
+CF anytime: https://codeforces-anytime.firebaseapp.com/
+
+
+
+
