@@ -1,0 +1,105 @@
+/*
+ECF #139 D. Lucky Chains
+Algorithm: Factorization, Brute Force
+TC: O(Nlog(logN))
+SC: O(NlogN) //N개의 조합에 logN개씩 소인수 구해줌
+Explaination:
+
+x와 y가 p로 나눈 나머지r이 같다면
+x+r과 y+r은 p로 나누어 떨어질 것이고
+x+r과 y-x도 p로 나누어 떨어질 것이다
+r을 구하고 싶다면 
+y-x를 나누어 떨어지게 하는 소인수 p들을 모두 구하고(O(logn))
+r을 가장 작게 만드는 경우가 어떤 것인지 알아낸다
+
+ret = min(ret, p - x%p)
+
+결국 소인수 분해가 핵심이고
+10^7까지의 수들의 소인수 분해만 할 수 있으면 되기 때문에
+O(logN)에 소인수 분해할 수 있다
+vector는 최대 10억개까지 push_back 할 수 있기 때문에
+spf 벡터를 그냥 만들어 주면 된다
+
+만약 10^8이 된다면
+sqrt(10^8)까지의 소수를 구한 뒤
+O(len(prime))만큼 매번 찾아 주었어야 한다
+
+1000일 때 prime의 개수가 168개 정도 된다
+10000일 떼 prime의 개수가 1229개 이므로
+O(logN) 보다 10배가량 커서 시간 초과가 될 수 있다
+*/
+
+#include <bits/stdc++.h>
+#define ll long long
+#define all(x) x.begin(), x.end()
+#define len(x) x.size()
+ 
+using namespace std;
+ 
+const ll N = 1e7+5;
+vector<ll> spf(N+1, 1); //smallest prime factor
+
+void sieve() { //O(Nlog(logN))
+    for(ll i = 2; i <= N; i++) {
+        if(spf[i] == 1) {
+            spf[i] = i;
+            for(ll j = i*i; j <= N; j += i) {
+                if(spf[j] == 1) spf[j] = i;
+            }
+        }
+    }
+}
+
+vector<ll> factorize(ll n) { //O(logN)
+    vector<ll> v;
+    while(n > 1)
+    {
+        ll fact = spf[n];
+        while(n % fact == 0) {
+            n /= fact;
+        }
+        v.push_back(fact);
+    }
+    return v;
+}
+
+
+ll gcd(ll x, ll y) {
+    if(x%y == 0) return y;
+    return gcd(y, x%y);
+}
+ 
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    sieve();
+    
+    int T; cin >> T;
+    while(T--) {
+        ll x, y;
+        cin >> x >> y;
+        ll dif = y - x;
+        
+        if(gcd(x, y) != 1) {
+            cout << 0 << endl;
+            continue;
+        }
+        
+        if(dif == 1){
+            cout <<  -1 << endl;
+            continue;
+        }
+        
+        //소인수 분해
+        vector<ll> pf = factorize(dif); //O(logn)
+        
+        ll mn = 1e9;
+        for(ll p : pf) {    //O(logn)
+            mn = min(mn, (p - (x%p)));    
+        }
+        cout << mn << endl;
+    }
+}
+
