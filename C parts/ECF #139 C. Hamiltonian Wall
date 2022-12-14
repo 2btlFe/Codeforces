@@ -1,0 +1,68 @@
+/*
+ECF #139 C. Hamiltonian Wall
+Algorithm: DP, Parity
+TC: O(N)
+SC: O(N)
+Explaination:
+if문이 복잡해질 수 있다
+
+기존 상태(2bit) * even의 개수(1bit) * 현재 상태(2bit)
+까지 총 5개의 bit에 따라 상황이 달라진다
+even의 개수가 홀수이면 상태가 변해야 하고, 아니라면 상태가 유지되야 한다
+
+
+이럴 경우,
+ok상태를 변경해주는 경우만 골라내준다
+*/
+#include <bits/stdc++.h>
+#define ll long long
+#define all(x) x.begin(), x.end()
+#define len(x) x.size()
+ 
+ 
+using namespace std;
+ 
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    int T; cin >> T;
+ 
+    while(T--) {
+        int n; cin >> n;
+        string s1, s2;
+        cin >> s1 >> s2;
+         
+        int odd, even;
+        odd = even = 0;
+        //odd는 0, 1, 2 even은 홀짝
+        
+        int s[n];
+        memset(s, 0, sizeof(s));
+        for(int i = 0; i < n; i++) {
+            if(s1[i] == 'B') s[i] = s[i] +1;
+            if(s2[i] == 'B') s[i] = s[i] +2;
+        }
+        
+        bool ok = true;
+        for(int i = 0; i < n; i++) {
+            //둘 다 B이면 넘어가기 
+            if(s[i] == 3) {
+                even = (even + 1) % 2;
+                continue;
+            }
+            //두번째 odd라면 중간의 짝수 개수에 따라 toggle되는지 확인
+            if(odd != 0 && ((odd == s[i] && even != 0) || (odd != s[i] && even != 1))) {
+                ok = false;
+                break;
+            } 
+            odd = s[i];
+            even = 0;
+        }
+        
+        if(ok) cout << "YES" << endl;
+        else cout << "NO" << endl;
+        
+    }
+}
