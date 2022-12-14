@@ -1,0 +1,53 @@
+/*
+ECF #139 A. Extremely Round
+Algorithm: Math, Brute Force
+TC: O(N|s|)
+SC: O(N)
+Explaination:
+숫자마다 미리 Extremely Round의 개수를 찾아두고
+test마다 출력만 한다
+*/
+
+#include <bits/stdc++.h>
+#define ll long long
+#define all(x) x.begin(), x.end()
+#define len(x) x.size()
+ 
+ 
+using namespace std;
+ 
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    int T; cin >> T;
+    
+    const int N = 1e6;
+    int cnt[N];
+    memset(cnt, 0, sizeof(cnt));
+    cnt[0] = 0;
+    for(int i = 1; i < N; i++) {
+        int x = i;
+        int notzero = 0;
+        while(x > 0) {
+            if(notzero >= 2) {
+                break;
+            }
+            if(x % 10 != 0) {
+                notzero++;
+            }
+            x /= 10;
+        }
+        
+        cnt[i] = cnt[i-1];
+        if(notzero == 1) cnt[i]++;
+    }
+    
+    
+    
+    while(T--) {
+        int n; cin >> n;
+        cout << cnt[n] << endl;
+    }
+}
