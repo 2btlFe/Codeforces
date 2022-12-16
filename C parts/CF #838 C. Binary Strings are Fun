@@ -1,0 +1,48 @@
+/*
+CF #838 C. Binary Strings are Fun
+Algorithm: DP
+TC: O(n)
+SC: O(n)
+Explaination:
+같은 수가 나오면 2배 해서 더해주기
+다른 수가 나오면 될 수 있는 경우가 1개 뿐이므로 1개 더해주기
+
+*/
+
+#include <bits/stdc++.h>
+#define ll long long
+#define endl "\n"
+#define all(x) x.begin(), x.end()
+#define len(x) x.size()
+
+using namespace std;
+
+const ll M = 998244353LL;
+
+void solve() {
+    int n; cin >> n;
+    string s; cin >> s;
+    
+    ll ret = 1;
+    ll mul = 1;
+    int seq = 1;
+
+    for(int i =1; i < n; i++) {
+        if(s[i] == s[i-1]) {
+            mul = (mul * 2) % M; //그대로 유지되면 0 or 1중 하나를 선택할 수 있다.
+        } else {
+            mul = 1;    //toggle이 일어나면 가능한 경우를 만들어주는 경우는 하나뿐이다. 
+        }
+        ret = (ret + mul) % M;
+    }
+    
+    cout << ret << endl;
+}
+
+int main() {
+    int t; cin >> t;
+    while(t--) {
+        solve();    
+    
+    }
+}
