@@ -1,0 +1,53 @@
+/*
+PR 2022(div1+div2) B. Coloring
+Algorithm: Constructive Algorithm, Greedy
+Constructive Algorithm이란 제한 사항을 만족하는 경우의 수 혹은 경우 자체를 구하는 문제
+TC: O(N)
+SC: O(1)
+Explaination:
+
+내 생각 로그
+가장 큰 k개씩 묶어서 배정한 뒤에 남은 상태가 1의 연속이면 가능 아니면 불가능 -> 3번 틀렸다
+
+답: 
+총 ceil(n/k)개의 구역이 생기고 만약 색깔의 개수가 ceil(n/k) 보다 작으면 무조건 가능
+같으면 같은 것의 개수 구하기
+크면 무조건 불가능
+
+같은 것의 개수가 (n-1)%k+1 보다 작거나 같으면 가능 아니면 불가능
+
+틀린 이유:
+ceil(n/k) 보다 작으면 자동으로 배정 가능하다는 것을 생각하지 못햇다
+*/
+
+#include <bits/stdc++.h>
+#define ll long long
+#define endl "\n"
+#define all(x) x.begin(), x.end()
+#define len(x) x.size()
+ 
+using namespace std;
+
+void solve() {
+    ll n, m, k; 
+    cin >> n >> m >> k;
+    
+    ll cnt = 0;
+    for(int i = 0; i < m; i++) {
+        ll x; cin >> x;
+        //ceil(n/k) == (n+k-1)/k
+        if(x == (n + k - 1) / k ) cnt++;
+        if(x > (n + k - 1) / k) cnt = 1 << 30;
+    }
+    
+    ll lastCell = (n%k == 0) ? k : n%k;
+    if(cnt <= lastCell) cout << "YES" << endl;
+    else cout << "NO" << endl;
+}
+ 
+int main() {
+    int t; cin >> t;
+    while(t--) {
+        solve();
+    }
+}
