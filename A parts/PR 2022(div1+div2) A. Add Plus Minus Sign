@@ -1,0 +1,42 @@
+/*
+PR 2022(div1+div2) A. Add Plus Minus Sign
+Algorithms: Constructive Algorithm
+TC: O(N)
+SC: O(1) 까지 가능
+Explaination:
+-부터 시작해서 1이 나오면 부호 변경한다 
+*/
+
+#include <bits/stdc++.h>
+#define ll long long
+#define endl "\n"
+#define all(x) x.begin(), x.end()
+#define len(x) x.size()
+ 
+using namespace std;
+ 
+void solve() {
+    int n; cin >> n;
+    string s; cin >> s;
+    
+    int toggle = 1;
+    for(int i = 1; i < n; i++) {
+        if(s[i] == '1') {
+            if(toggle == 1) { 
+                cout << '-';
+            } else {
+                cout << '+';
+            }
+            toggle*= -1;
+        }
+        else cout << '+';
+    }
+    cout << endl;
+}
+ 
+int main() {
+    int t; cin >> t;
+    while(t--) {
+        solve();
+    }
+}
