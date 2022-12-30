@@ -1,0 +1,80 @@
+#include <bits/stdc++.h>
+#define ll long long
+#define endl "\n"
+#define all(x) x.begin(), x.end()
+
+using namespace std;
+
+/*
+void showV(const vector<auto>& v) {
+    for(auto x : v) cout << x << " ";
+    cout << endl;
+}
+
+void showVV(const vector<vector<auto>> & vv) {
+    for(int i = 0; i < vv.size(); i++) {
+        for(int j = 0; j < vv[0].size(); j++) {
+            cout << vv[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
+}
+*/
+ll gcd(ll a, ll b) {
+    if(a % b == 0) return b;
+    return gcd(b, a%b);
+}
+
+void solve() {
+    int n; cin >> n;
+    vector<ll> v(n);
+    for(ll&x : v) cin >> x;
+    
+    int chk[101][101];
+    memset(chk, 0, sizeof(chk));
+    sort(all(v));
+    for(int i = 0; i < n; i++) {
+        for(int j = i+1; j < n; j++) {
+            ll diff = v[j] - v[i];
+            
+            if(diff >= 100) break;
+            if(diff == 0) {
+                cout << "NO" << endl;
+                return;
+            }
+            
+            chk[diff][(diff - (v[i] % diff))%diff]++;
+        }
+    }
+    
+    if(chk[1][0] == 1) {
+        cout << "NO" << endl;
+        return;
+    }
+    
+    for(int i = 2; i <= 100; i++) {
+        bool ok = true;
+        for(int j = 0; j < i; j++) {
+            
+            //cout << i << " " << j << " " << chk[i][j] << endl;
+            if(chk[i][j] == 0) {
+                ok= false;
+                break;
+            }
+        }
+        if(ok) {
+            cout << "NO" << endl;
+            return;
+        }
+    }
+    
+    cout << "YES" << endl;
+}
+
+int main() {
+    int tt; cin >>tt;
+    while(tt--) {
+        solve();
+    }
+}
