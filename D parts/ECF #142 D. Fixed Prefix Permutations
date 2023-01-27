@@ -27,7 +27,7 @@ Explaination:
 #define all(x) x.begin(), x.end()
 
 using namespace std;
-
+ 
 int get(const vector<int>& a, const vector<int>& b) {
     int sz = a.size();
     int i = 0;
